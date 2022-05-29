@@ -1,3 +1,4 @@
+# Ilai Ahronovitz 325167641
 import networkx as nx # used for useful functions for graphs in code(check connectivity, isomorphism)
 
 """
@@ -50,9 +51,8 @@ def powerset(seq):
 """
 input: input positive integer N and a graph G_graph
 """
-def print_motifs_and_instances(N, G_graph):
+def print_motifs_and_instances(n, G_graph):
     edges = []
-    n = len(G_graph.nodes)
     for i in range(1, n+1):
         for j in range(1, n+1):
             if(i != j):   
@@ -65,17 +65,10 @@ def print_motifs_and_instances(N, G_graph):
 
 
     allGcomb = list(powerset(list(G_graph.edges)))
-    temp_set = set()
     count_sub_grahps = 0
     for i in allGcomb:
         if(len(i) < n-1):
             allGcomb.remove(i)
-        for k in i:
-            temp_set.add(k[0])
-            temp_set.add(k[1])
-        if(len(temp_set) == N):
-            count_sub_grahps = count_sub_grahps + 1
-        temp_set.clear()
 
     motif_list = []
     comb_without_motifs = []
@@ -109,6 +102,16 @@ def print_motifs_and_instances(N, G_graph):
             print(str(k[0]) + " " + str(k[1]))
             
 G = nx.DiGraph()
-G.add_nodes_from(list(range(1, 4)))
-G.add_edges_from([(1,2), (2,3)])
-print_motifs_and_instances(2, G) 
+
+n = int(input('Enter positive integer number n: '))
+G.add_nodes_from(list(range(1, n + 1)))
+
+edges_str = input('Enter string of edges in graph: ')
+edges_lst = edges_str.split()
+edges_list = []
+for i in range(0,len(edges_lst), 2):
+    edges_list.append((edges_lst[i],edges_lst[i+1]))
+G.add_edges_from(edges_list)
+#edges_list = [(2,1),(3,1),(3,2)] # list of edges, every tuple represents edge
+
+print_motifs_and_instances(n, G) 
